@@ -1,7 +1,7 @@
 h1 {color: blue;}
 
 html{
-    
+    background-color: black;
     font-family: "Press Start 2P";
     color: cornflowerblue
 }
@@ -41,3 +41,4 @@ marquee {
 #portal {
     padding: 1.5rem 10%;
 }
+
