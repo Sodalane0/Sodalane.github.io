@@ -36,10 +36,6 @@ marquee {
     padding: 1.5rem 10%;
 }
 
-#portal {
-    padding: 1.5rem 10%;
-}
-
 .center {
     width: 100%;
     height: 100%;
@@ -154,4 +150,26 @@ marquee {
     justify-content: center;
     align-items: center;
     width: 40%;
+}
+
+footer {
+    width: 100%;
+    height: fit-content;
+    box-sizing: border-box;
+    background: rgb(55, 55, 75);
+    display: flex;
+    opacity: 50%;
+    align-items: center;
+    justify-content: center;
+}
+
+#welcome {
+    justify-content: center;
+    text-align: center;
+
+}
+
+section {
+    justify-content: center;
+    text-align: center;
 }
