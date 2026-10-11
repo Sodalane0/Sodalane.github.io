@@ -186,14 +186,14 @@ li {
 }
 
 form {
-    display: grid;                   /* stacks the fields vertically */
-    gap: 20px;                       /* space between fields */
+    display: grid;                  
+    gap: 20px;                      
     padding: 10px;
 
 }
 
-label {                            /* the words "Name" and "Message" */
-    display: block;                  /* puts the label ABOVE its box, not beside it */
+label {                           
+    display: block;            
     margin-bottom: 4px;
     font-size: 0.9em;
     color: magenta;
@@ -202,18 +202,18 @@ label {                            /* the words "Name" and "Message" */
 input,
 textarea {
   display: block;
-  width: 100%;                     /* full width of the form */
-  padding: 10px;                   /* space inside the box */
+  width: 100%;                    
+  padding: 10px;                  
   background: red;
   color: yellow;
   border: 3px solid limegreen;
-  font: inherit;                   /* use the same font as the page */
+  font: inherit;                  
 }
 
-textarea {                         /* only the Message box */
-  width: 100%;               /* make this bigger for a taller message box */
+textarea {                        
+  width: 100%;              
   height: 80px;
-  resize: none;                /* visitors can drag it taller; use "none" to lock */
+  resize: none;              
 }
 
 input:focus,
@@ -249,43 +249,39 @@ button:disabled {
 }
  
 
-#entries {                         /* the container for all entry cards */
+#entries {                         
   display: grid;
-  gap: 5px;                 /* space between cards */
-  margin-top: 28px;                /* space between form and first entry */
+  gap: 5px;                 
+  margin-top: 28px;                
 }
  
-.entry {                           /* one visitor's card */
+.entry {                           
   padding: 5px;
   background: var(--box-bg);
   border: 1px solid orange;
   text-align: middle;
 }
  
-.who {                             /* the visitor's name */
+.who {                             
   font-weight: 600;
   color: var(--accent-color);
 }
  
-.when {                            /* the date next to the name */
-  margin-left: 8px;                /* gap between name and date; set 0 to remove */
+.when {                            
+  margin-left: 8px;                
   font-size: 0.8em;
   color: var(--muted-color);
 }
  
-.entry p {                         /* the message text */
+.entry p {                     
   margin: 6px 0 0;
-  white-space: pre-wrap;           /* keeps the visitor's line breaks */
-  overflow-wrap: anywhere;         /* stops very long words breaking the layout */
+  white-space: pre-wrap;         
+  overflow-wrap: anywhere;        
 }
  
- 
-/* ==========================================================
-   8. SMALL SCREENS (phones)
-   ========================================================== */
 @media (max-width: 480px) {
   main {
-    padding: 20px 12px 48px;       /* less side space on phones */
+    padding: 20px 12px 48px;     
   }
 }
  
