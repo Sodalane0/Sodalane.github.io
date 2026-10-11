@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guestbook</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/icon.png">
+    <script src="js/script.js" defer></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="landing">
+
+    <div class="center">
+        <div class="menu">
+            <input type="checkbox" name="" id="menu">
+
+            <div class="logo">
+                <a href="index.html"><img src="images/banner.gif" height="50px" width="auto"></a>
+                <label  for="menu"></label>
+            </div>
+
+            <div class="items">
+                <a href="home.html" class="item">Home</a>
+                <a href="about.html" class="item">About</a>
+                <a href="guestbook.html" class="item">Guestbook</a>
+                <a href="projects.html" class="item">Projects</a>
+                <a href="travel.html" class="item">Travels</a>
+                <a href="youtube.html" class="item">Youtube</a>
+                <a href="games.html" class="item">Games</a>
+            </div>
+        </div>
+    </div>
+
+    <h2>Guestbook</h2>
+    <p>Leave a note and your name. </p>
+
+    <form id="form" autocomplete="off">
+        <div>
+            <label for="name">Your name</label>
+            <input id="name" maxlength="50" required>
+        </div>
+        <div>
+            <label for="message">Message</label>
+            <textarea id="message" maxlength="500" required></textarea>
+        </div>
+
+        <input class="hp" id="website" tabindex="-1" aria-hidden="true" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+        
+        <button id="send" type="submit">--> Sign the guestbook! <--</button>
+        
+        <div id="status" role="status"></div>
+    </form>
+
+    <section id="entries" aria-live="polite"></section>
+
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import { getFirestore, collection, doc, setDoc, query, orderBy, limit, onSnapshot, serverTimestamp }
+        from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBQ08HB5oCSOc03AlOmzSA020gi7iULqy8",
+        authDomain: "sodalane.firebaseapp.com",
+        projectId: "sodalane",
+        appId: "1:442387521537:web:e8cbb0f8fcb6d1d59aa000"
+    };
+
+    const $ = id => document.getElementById(id);
+    const status = $("status"), list = $("entries"), form = $("form"), send = $("send");
+
+    if (firebaseConfig.apiKey === "YOUR_API_KEY") {
+        status.textContent = "Setup needed: add your Firebase config in guestbook.html.";
+        send.disabled = true;
+    } else {
+        const db = getFirestore(initializeApp(firebaseConfig));
+        const col = collection(db, "guestbook");
+
+        // Live list of the latest 100 entries
+        onSnapshot(query(col, orderBy("createdAt", "desc"), limit(100)), snap => {
+        list.replaceChildren();
+        snap.forEach(doc => {
+            const d = doc.data();
+            const el = document.createElement("article");
+            el.className = "entry";
+            const who = document.createElement("span");
+            who.className = "who"; who.textContent = d.name;
+            const when = document.createElement("span");
+            when.className = "when";
+            when.textContent = d.createdAt ? d.createdAt.toDate().toLocaleDateString() : "just now";
+            const p = document.createElement("p");
+            p.textContent = d.message;
+            const head = document.createElement("div");
+            head.append(who, when);
+            el.append(head, p);
+            list.append(el);
+        });
+        if (!snap.size) list.textContent = "No entries yet. Be the first!";
+        }, () => { status.textContent = "Could not load entries."; });
+
+        form.addEventListener("submit", async e => {
+        e.preventDefault();
+        if ($("website").value) return;                       // honeypot: bots fill this
+        const last = Number(localStorage.getItem("gb_last") || 0);
+        if (Date.now() - last < 30000) { status.textContent = "Please wait a bit before posting again."; return; }
+        const name = $("name").value.trim().slice(0, 50);
+        const message = $("message").value.trim().slice(0, 500);
+        if (!name || !message) return;
+        send.disabled = true; status.textContent = "Sending...";
+        try {
+            const safeName = name.replace(/[\/\\.#$\[\]]/g, "").trim().slice(0, 40) || "guest";
+            await setDoc(doc(col, safeName + "-" + Date.now()), { name, message, createdAt: serverTimestamp() });
+            localStorage.setItem("gb_last", String(Date.now()));
+            form.reset(); status.textContent = "Thanks for signing!";
+        } catch (err) {
+            status.textContent = "Could not send your message. Please try again later.";
+        } finally { send.disabled = false; }
+        });
+    }
+    </script>
+
+    <footer>
+        <p>You can email me at Sodalane@outlook.com!!</p>
+    </footer>
+</body>
+</html>

@@ -161,6 +161,7 @@ footer {
     opacity: 50%;
     align-items: center;
     justify-content: center;
+    margin-top: 20px;
 }
 
 #welcome {
@@ -183,3 +184,108 @@ li {
     list-style-position: inside;
     color: red;
 }
+
+form {
+    display: grid;                   /* stacks the fields vertically */
+    gap: 20px;                       /* space between fields */
+    padding: 10px;
+
+}
+
+label {                            /* the words "Name" and "Message" */
+    display: block;                  /* puts the label ABOVE its box, not beside it */
+    margin-bottom: 4px;
+    font-size: 0.9em;
+    color: magenta;
+}
+
+input,
+textarea {
+  display: block;
+  width: 100%;                     /* full width of the form */
+  padding: 10px;                   /* space inside the box */
+  background: red;
+  color: yellow;
+  border: 3px solid limegreen;
+  font: inherit;                   /* use the same font as the page */
+}
+
+textarea {                         /* only the Message box */
+  width: 100%;               /* make this bigger for a taller message box */
+  height: 80px;
+  resize: none;                /* visitors can drag it taller; use "none" to lock */
+}
+
+input:focus,
+textarea:focus {             
+  outline: 2px solid var(White);
+  outline-offset: 1px;
+}
+
+button {
+  justify-self: center;             
+  padding: 10px 18px;              
+  background: var(--accent-color);
+  color: pink;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover {                 
+  filter: brightness(1.6);
+}
+ 
+button:disabled {                
+  opacity: 0.5;
+  cursor: default;
+}
+ 
+ 
+#status {
+  min-height: 1.4em;             
+  font-size: 0.9em;
+  color: pink;
+}
+ 
+
+#entries {                         /* the container for all entry cards */
+  display: grid;
+  gap: 5px;                 /* space between cards */
+  margin-top: 28px;                /* space between form and first entry */
+}
+ 
+.entry {                           /* one visitor's card */
+  padding: 5px;
+  background: var(--box-bg);
+  border: 1px solid orange;
+  text-align: middle;
+}
+ 
+.who {                             /* the visitor's name */
+  font-weight: 600;
+  color: var(--accent-color);
+}
+ 
+.when {                            /* the date next to the name */
+  margin-left: 8px;                /* gap between name and date; set 0 to remove */
+  font-size: 0.8em;
+  color: var(--muted-color);
+}
+ 
+.entry p {                         /* the message text */
+  margin: 6px 0 0;
+  white-space: pre-wrap;           /* keeps the visitor's line breaks */
+  overflow-wrap: anywhere;         /* stops very long words breaking the layout */
+}
+ 
+ 
+/* ==========================================================
+   8. SMALL SCREENS (phones)
+   ========================================================== */
+@media (max-width: 480px) {
+  main {
+    padding: 20px 12px 48px;       /* less side space on phones */
+  }
+}
+ 
