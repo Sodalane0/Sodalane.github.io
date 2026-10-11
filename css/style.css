@@ -173,3 +173,12 @@ section {
     justify-content: center;
     text-align: center;
 }
+
+h2 {
+    color: yellow;
+}
+
+li {
+    list-style-position: inside;
+    color: red;
+}
